@@ -40,16 +40,26 @@
 
           <td class="p-4">{{ item.price }}</td>
 
-          <td class="p-4 flex items-center">
+          <td class="p-4">
 
-            <button class="px-2 py-1 bg-gray-700 text-white rounded-md">
-               -
+            <button
+              class="px-2 py-1 bg-gray-700 !text-white rounded-md"
+              @click="cart_store.decrementProduct(item.id)"
+            >
+
+              <MinusOutlined />
+
             </button>
 
             <span class="mx-2">{{ item.quantity }}</span>
 
-            <button class="px-2 py-1 bg-gray-700 text-white rounded-md">
-               +
+            <button
+              class="px-2 py-1 bg-gray-700 !text-white rounded-md"
+              @click="cart_store.incrementProduct(item.id)"
+            >
+
+              <PlusOutlined />
+
             </button>
 
           </td>
@@ -58,8 +68,13 @@
 
           <td class="p-4">
 
-            <button class="px-4 py-2 bg-red-600 text-white rounded-md">
-               Delete
+            <button
+              class="px-4 py-2 bg-red-600 !text-white rounded-md flex items-center gap-x-[10px]"
+              @click="cart_store.removeProduct(item.id)"
+            >
+
+              <DeleteOutlined />
+               Remove
             </button>
 
           </td>
@@ -70,6 +85,31 @@
 
     </table>
 
+    <div class="flex justify-end mt-[36px]">
+
+      <div class="flex gap-x-[10px] items-center">
+
+        <button
+          class="bg-red-600 !text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
+          @click="cart_store.clearCart"
+        >
+
+          <DeleteOutlined />
+           Clear Cart
+        </button>
+
+        <button
+          class="bg-[#4e881f] !text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
+        >
+
+          <ShoppingCartOutlined />
+           100
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
 </template>
@@ -77,12 +117,14 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useCartStore } from '../store/Cart'
+import {
+  PlusOutlined,
+  MinusOutlined,
+  DeleteOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons-vue'
 
 const cart_store = useCartStore()
 const myCart = computed<any[]>(() => cart_store.cart)
-
-onMounted(() => {
-  console.log('mycart: ', cart_store.cart)
-})
 </script>
 

@@ -24,11 +24,9 @@ export const useCartStore = defineStore('useCartStore', () => {
     const findId = cart.value.find((item) => item.id === data.id)
 
     if (findId) {
-      console.log('ketemu')
       findId.quantity += 1
       findId.totalPrice += data.price
     } else {
-      console.log('gak ketemu')
       cart.value.push({
         ...data,
         quantity: 1,
@@ -37,5 +35,38 @@ export const useCartStore = defineStore('useCartStore', () => {
     }
   }
 
-  return { cart, addCart }
+  const removeProduct = (id: number) => {
+    cart.value = cart.value.filter((item: Product) => item.id !== id)
+  }
+
+  const incrementProduct = (id: number) => {
+    const findId = cart.value.find((item: Product) => item.id === id)
+    if (findId) {
+      findId.quantity += 1
+    }
+  }
+
+  const decrementProduct = (id: number) => {
+    const findId = cart.value.find((item: Product) => item.id === id)
+    if (findId) {
+      findId.quantity -= 1
+
+      if (findId.quantity === 0) {
+        removeProduct(id)
+      }
+    }
+  }
+
+  const clearCart = () => {
+    cart.value = []
+  }
+
+  return {
+    cart,
+    addCart,
+    incrementProduct,
+    decrementProduct,
+    removeProduct,
+    clearCart,
+  }
 })

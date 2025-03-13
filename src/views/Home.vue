@@ -1,12 +1,14 @@
 <template>
 
-  <Spin></Spin>
+  <Spin :spinning="loading" :indicator="h(LoadingOutlined, { spin: true })">
 
-  <div class="grid grid-cols-4 gap-[24px]">
+    <div class="grid grid-cols-4 gap-[24px]">
 
-    <ProductCard v-for="item in data" :key="item.id" :item="item" />
+      <ProductCard v-for="item in data" :key="item.id" :item="item" />
 
-  </div>
+    </div>
+
+  </Spin>
 
 </template>
 
@@ -24,18 +26,25 @@ type Product = {
   }
 }
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, h } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useProductStore } from '../store/Product'
+import { Spin } from 'ant-design-vue'
+import { LoadingOutlined } from '@ant-design/icons-vue'
 
 const data = ref<Product[]>([])
+const loading = ref(false)
 const product_store = useProductStore()
 const getData = async () => {
+  loading.value = true
   try {
     const res = await fetch('https://fakestoreapi.com/products')
     data.value = await res.json()
     product_store.addProduct(data.value)
-  } catch (error) {}
+  } catch (error) {
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(() => {

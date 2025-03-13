@@ -21,7 +21,7 @@
         <ProductCounter :defaultValue="1" :onChange="handleChange" />
 
         <button
-          class="bg-[#4e881f] text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
+          class="bg-[#4e881f] !text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
         >
            ฿ {{ totalPrice }}
           <ShoppingCartOutlined />

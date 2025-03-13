@@ -20,7 +20,7 @@
 
     <div class="flex justify-between">
 
-      <router-link :to="`product/${item.id}`">
+      <router-link :to="`product/${item.id}`" class="!text-[#FCFAEE]">
 
         <button
           class="bg-[#384B70] text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
@@ -31,7 +31,7 @@
       </router-link>
 
       <button
-        class="bg-[#4e881f] text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
+        class="bg-[#4e881f] !text-[#FCFAEE] p-[8px] rounded flex gap-x-[8px] items-center cursor-pointer"
         @click="
           cart_store.addCart({ ...item, quantity: 1, totalPrice: item.price })
         "
