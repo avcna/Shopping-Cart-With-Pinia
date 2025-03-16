@@ -14,7 +14,12 @@
 
     <div class="border border-white rounded p-[8px]">
 
-      <input type="text" class="outline-none" placeholder="Search" />
+      <input
+        type="text"
+        class="outline-none"
+        placeholder="Search"
+        v-model="product_store.searchValue"
+      />
 
     </div>
 
@@ -22,5 +27,9 @@
 
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useProductStore } from '../store/Product'
+
+const product_store = useProductStore()
+</script>
 

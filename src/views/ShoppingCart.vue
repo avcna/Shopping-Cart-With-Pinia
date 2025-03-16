@@ -2,7 +2,7 @@
 
   <p class="text-[#507687] font-bold text-[32px]">My Shopping Cart</p>
 
-  <div class="container mx-auto p-6">
+  <div class="container mx-auto p-6" v-if="myCart.length > 0">
 
     <table class="w-full border-collapse">
 
@@ -64,7 +64,7 @@
 
           </td>
 
-          <td class="p-4"> {{ item.price * item.quantity }} </td>
+          <td class="p-4"> {{ item.totalPrice.toFixed(2) }} </td>
 
           <td class="p-4">
 
@@ -103,7 +103,7 @@
         >
 
           <ShoppingCartOutlined />
-           100
+           {{ cart_store.totalPrice }}
         </button>
 
       </div>
@@ -112,10 +112,16 @@
 
   </div>
 
+  <div v-else class="text-center text-[#507687] text-[32px]">
+
+    <Empty />
+
+  </div>
+
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useCartStore } from '../store/Cart'
 import {
   PlusOutlined,
@@ -123,6 +129,7 @@ import {
   DeleteOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons-vue'
+import { Empty } from 'ant-design-vue'
 
 const cart_store = useCartStore()
 const myCart = computed<any[]>(() => cart_store.cart)

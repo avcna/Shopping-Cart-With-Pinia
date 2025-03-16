@@ -26,21 +26,21 @@ type Product = {
   }
 }
 
-import { onMounted, ref, h } from 'vue'
+import { onMounted, ref, h, computed } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useProductStore } from '../store/Product'
 import { Spin } from 'ant-design-vue'
 import { LoadingOutlined } from '@ant-design/icons-vue'
 
-const data = ref<Product[]>([])
+const data = computed(() => product_store.searchedProducts)
 const loading = ref(false)
 const product_store = useProductStore()
 const getData = async () => {
   loading.value = true
   try {
     const res = await fetch('https://fakestoreapi.com/products')
-    data.value = await res.json()
-    product_store.addProduct(data.value)
+    const data: Product[] = await res.json()
+    product_store.addProduct(data)
   } catch (error) {
   } finally {
     loading.value = false

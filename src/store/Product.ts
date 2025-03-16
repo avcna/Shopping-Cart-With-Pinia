@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 type Product = {
   id: number
@@ -16,10 +16,22 @@ type Product = {
 
 export const useProductStore = defineStore('useProductStore', () => {
   const product = ref<Product[]>([])
+  const searchValue = ref('')
+  const searchedProducts = computed(() =>
+    product.value.filter((item) => {
+      if (searchValue.value == '') {
+        return product
+      } else {
+        return item.title
+          .toLowerCase()
+          .includes(searchValue.value.toLowerCase())
+      }
+    })
+  )
 
   const addProduct = (data: Product[]) => {
     product.value.push(...data)
   }
 
-  return { product, addProduct }
+  return { product, searchValue, searchedProducts, addProduct }
 })
